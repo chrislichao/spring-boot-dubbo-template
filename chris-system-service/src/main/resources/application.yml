@@ -1,0 +1,60 @@
+# 服务相关配置
+server:
+  port: 8081
+  
+# 雪花id生成器配置
+snowflake:
+  data:
+    center:
+      id: 1
+  worker:
+    id: 0
+  
+# druid数据库连接池相关配置
+druid:
+  monitor:
+    config:
+      login:
+        username: admin
+        password: admin
+      reset:
+        enable: false
+      allow:
+        ip: 192.168.0.62
+      deny:
+        ip: 192.168.0.120
+
+# mybatis相关配置
+mybatis:
+  # mybatis配置文件
+  config-location: classpath:mybatis.xml
+  # 映射文件所在路径
+  mapper-locations:
+  # 前面的 - 不要删除
+  - classpath:mapper/*.xml
+  
+# 分页插件相关配置
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+spring:
+  # dubbo服务配置信息
+  dubbo:
+    application:
+      name: system-service-privider
+    registry:
+      address: zookeeper://192.168.137.2:2181
+    protocol:
+      name: dubbo
+      port: 20881
+    scan: org.ys.soft.system.facade
+    monitor:
+      protocol: registry
+      
+tx:
+  # 事务管理调度器地址
+  manager:
+    url: http://127.0.0.1:8899/tx/manager/

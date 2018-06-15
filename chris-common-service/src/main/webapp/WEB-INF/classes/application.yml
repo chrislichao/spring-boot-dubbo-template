@@ -1,0 +1,100 @@
+# 服务相关配置
+server:
+  port: 8080
+  
+# 雪花id生成器配置
+snowflake:
+  data:
+    center:
+      id: 0
+  worker:
+    id: 0
+    
+# druid数据库连接池相关配置
+druid:
+  monitor:
+    config:
+      login:
+        username: admin
+        password: admin
+      reset:
+        enable: false
+      allow:
+        ip: 192.168.0.62
+      deny:
+        ip: 192.168.0.120
+
+# mybatis相关配置
+mybatis:
+  # mybatis配置文件
+  config-location: classpath:mybatis.xml
+  # 映射文件所在路径
+  mapper-locations:
+  # 前面的 - 不要删除
+  - classpath:mapper/*.xml
+  
+# 分页插件相关配置
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+spring:
+  # dubbo服务配置信息
+  dubbo:
+    application:
+      name: system-service-privider
+    registry:
+      address: zookeeper://192.168.137.2:2181
+    protocol:
+      name: dubbo
+      port: 20880
+    scan: org.ys.soft.common.facade
+    monitor:
+      protocol: registry
+      
+  # redis服务配置信息
+  redis:
+    database: 0
+    host: 192.168.0.201
+    port: 6379
+    password: 
+    # 连接超时时间(毫秒)
+    timeout: 3000
+    # 线程池设置
+    pool:
+      # 最大空闲连接
+      max-idle: 500
+      # 最小空闲连接
+      min-idle: 50
+      # 如果赋值为-1,则表示不限制;如果pool已经分配了maxActive个jedis实例,则此时pool的状态为exhausted(耗尽)
+      max-active: 2000
+      # 等待可用连接的最大时间,单位毫秒,默认值为-1,表示永不超时
+      max-wait: 1000
+    # 哨兵设置
+    #sentinel:
+      #master: xxxxx
+      #nodes: host_a:port,host_b:port,host_c:port
+      
+  # redisson分布式锁相关配置信息
+  redisson:
+    address: redis://192.168.0.201:6379
+    password:
+    # 连接超时时间(毫秒)
+    timeout: 3000
+    connectionPoolSize: 64
+    connectionMinimumIdleSize: 10
+    
+  # activemq配置信息
+  activemq:
+    broker-url: tcp://192.168.137.2:61616
+    in-memory: true
+    pool:
+      enabled: true 
+    packages:
+      trust-all: true
+      
+# 日志队列名称
+log:
+  queue: system-log-queue
